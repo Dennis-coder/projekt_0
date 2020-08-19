@@ -1,0 +1,47 @@
+doctype html
+html lang="en"
+    head
+        meta charset="UTF-8"/
+        meta name="viewport" content="width=device-width, initial-scale=1.0"/
+        meta http-equiv="X-UA-Compatible" content="ie=edge"/
+        link rel="stylesheet" href="/css/style.css"/
+        link href="https://fonts.googleapis.com/css?family=Muli:400,700&display=swap" rel="stylesheet"
+        title WebSnap
+    body
+        nav#menu class="menu"
+            a class="menu-button" href="/" Home
+            -if session['user_id'] == nil
+                a class="menu-button" href="/login" Login
+                a class="menu-button" href="/register" Register
+            -else 
+                a class="menu-button" href="/home/find_user" Find User
+                a class="menu-button" href="/home/new_chat" New Groupchat
+                a class="menu-button" href="/home/settings" Settings
+                -if @user.admin == 1
+                    a class="menu-button" href="/home/admin" Admin Lounge
+                a class="menu-button" href="/logout" Logout
+
+        header
+            -if session['db_error'] != true
+                a#toggle-menu href="#" onclick="toggleMenu()"
+                    img src="/media/menu.svg"
+                div
+
+                    -if session['user_id'] == nil
+                        a class='button' href='/login' Login
+                        a class='button' href='/register' Register
+                    -else
+                        h1 #{@user.username}
+
+                a href="/"
+                    img src='/media/logo.png'
+
+        main class='space centered-column'
+            == yield
+
+        footer 
+            div
+                p WebSnap Inc.
+
+
+        script src="/js/script.js"
