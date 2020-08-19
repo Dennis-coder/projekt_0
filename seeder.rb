@@ -2,12 +2,8 @@ require 'sqlite3'
 require 'bcrypt'
 Dir.glob('models/*.rb') { |model| require_relative model }
 
-# Resets the database and adds some data.
 class Seeder
 
-    # Calls the different functions to reset the database.
-    #
-    # db  - The database.
     def self.seed!
         db = connect
         drop_tables(db)
@@ -15,24 +11,15 @@ class Seeder
         populate_tables(db)
     end
 
-    # Connects to the database.
-    # 
-    # Returns the database.
     def self.connect
         SQLite3::Database.new "db/db.db"
     end
 
-    # Deletes the tables.
-    #
-    # db  - The database.
     def self.drop_tables(db)
         db.execute("DROP TABLE IF EXISTS users;")
         db.execute("DROP TABLE IF EXISTS students;")
     end
 
-    # Creates the tables.
-    #
-    # db  - The database.
     def self.create_tables(db)
         db.execute <<-SQL
             CREATE TABLE "users" (
@@ -52,12 +39,9 @@ class Seeder
         SQL
     end
 
-    # Adds data to some of the database tables
-    #
-    # db  - The database.
     def self.populate_tables(db)
         users = [
-            {email: "hej@gmail.com", password_hash: BCrypt::Password.create("1"), name: "Dennis"}
+            {email: "1", password_hash: BCrypt::Password.create("1"), name: "Dennis"}
         ]
 
         users.each do |user|
@@ -65,12 +49,12 @@ class Seeder
         end
 
         students = [
-            {name: "Alexander", image: , user_id: 1},
-            {name: "Henrik", image: , user_id: 1}
+            {name: "Alexander", image: '/media/pfp2.jpg', user_id: 1},
+            {name: "Henrik", image: '/media/pfp2.jpg', user_id: 1}
         ]
 
         students.each do |student|
-            db.execute("INSERT INTO messages (name, image, user_id) VALUES(?,?,?)", student[:name], student[:image], student[:user_id])
+            db.execute("INSERT INTO students (name, image, user_id) VALUES(?,?,?)", student[:name], student[:image], student[:user_id])
         end
     end
 

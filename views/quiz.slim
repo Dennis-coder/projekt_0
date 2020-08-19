@@ -1,0 +1,8 @@
+div
+    form action="/quiz" method='post'
+        -students.each do |student|
+            div 
+                img src=student['image']
+                p Guess the name of the student
+                input type='text' name=student['id']
+        button type='submit' Done

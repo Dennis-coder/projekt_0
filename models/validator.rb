@@ -1,57 +1,21 @@
-# The class that handles all validation
 class Validator
 
-    # Validation of login information.
-    # 
-    # params - The login information.
-    # username - The username written.
-    # plaintext - The password written.
-    # user_id - The id of the user with that username.
-    # user - The user with that username.
-    # 
-    # Examples
-    # 
-    #   Validator.login({'username' => 'Tester1', 'plaintext' => '1'})
-    #   # => true
-    # 
-    #   Validator.login({'username' => 'Tester1', 'plaintext' => '2'})
-    #   # => 'Wrong username or password'
-    # 
-    # Returns true or an error message.
     def self.login(params)
-        username = params['username']
+        email = params['email']
         plaintext = params['plaintext']
         begin
-            user_id = User.id(username)
+            user_id = User.id(email)
 		rescue
-            return "Wrong username or password"
+            return "Wrong email or password"
         end
         user = User.get(user_id)
         if BCrypt::Password.new(user.password_hash) == plaintext
 			return user_id
 		else
-			return "Wrong username or password"
+			return "Wrong email or password"
 		end
     end
 
-    # Validation of registration information.
-    # 
-    # params - The registration information.
-    # username - The username written.
-    # plaintext - The password written.
-    # plaintext_confirm - The password confirmation written.
-    # allowed_chars - The characters allowed in username and password.
-    # user_id - The id of the user with that username.
-    # 
-    # Examples
-    # 
-    #   Validator.register({'username' => 'Dennis', 'plaintext' => 'Dennis', 'plaintext_confirm' => 'Dennis'})
-    #   # => true
-    # 
-    #   Validator.register({'username' => 'Dennis', 'plaintext' => 'Dennis', 'plaintext_confirm' => 'Dennis1'})
-    #   # => 'Passwords are not the same'
-    # 
-    # Returns true or an error message.
     def self.register(params)
         username = params['username']
         plaintext = params['plaintext']
@@ -83,19 +47,6 @@ class Validator
         return "A user with that name already exists"
     end
 
-    # Validates texts.
-    # 
-    # text - The text to be validated.
-    # 
-    # Examples
-    # 
-    #   Validator.message('Hej')
-    #   # => true
-    # 
-    #   Validator.message('  ')
-    #   # => false
-    # 
-    # Returns true or false.
     def self.message(text)
         if text == nil
             return false
@@ -109,13 +60,6 @@ class Validator
             return false
         end
     end
-
-    # Validates information for a password change.
-    # 
-    # password_hash - The current password hash.
-    # params - The password change information.
-    # 
-    # Returns true or an error message.
     def self.change_password(password_hash, params)
         if BCrypt::Password.new(password_hash) == params['current_password']
             if params['new_password'] != params['confirm_password']
@@ -130,13 +74,6 @@ class Validator
         end
     end
 
-    # Validates the information for a report.
-    # 
-    # user - Your own user.
-    # params - Includes the report information
-    # Validator - The class that handles all validation.
-    # 
-    # Returnstrue or an error message.
     def self.report(user, params)
         if Validator.message(params['username']) == false || Validator.message(params['reason']) == false
             return "Please fill out every box"

@@ -1,15 +1,22 @@
-div class='container register centered-column'
+div class=''
     h1 Create an account
     p = session['register_error']
     -session.delete('register_error')
-    form class='centered-column' action="/register" method='post'
-        div class='space centered-column'
-            span Username
-            input type='text' name='username'
-        div class='space centered-column'
+    form class='' action="/register" method='post'
+        div class=''
+            span Email
+            input type='text' name='email'
+        div class=''
+            span Name
+            input type='text' name='name'
+        div class=''
             span  Password
             input type='password' name='plaintext'
-        div class='space centered-column'
+        div class=''
             span Confirm password
             input type='password' name='plaintext_confirm'
         button type='submit' Register
+    
+    div
+        p Aldready have an account?
+        a href='/login' Sign in here
