@@ -68,7 +68,7 @@ class Application < Sinatra::Base
 			user.password_hash = BCrypt::Password.create(params['plaintext'])
 			user.add()
 
-			session['user_id'] = User.id(user.username)
+			session['user_id'] = User.id(user.email)
 			redirect '/home'
 		else
 			session['register_error'] = result
@@ -85,8 +85,69 @@ class Application < Sinatra::Base
 		slim :home
 	end
 
-	get '/home/quiz/?' do
-		slim :quiz, locals: {students: @user.students}
+	get '/home/practice/?' do
+		slim :practice, locals: {groups: @user.groups}
+	end
+
+	get '/home/groups/?' do
+		slim :groups, locals: {groups: @user.groups}
+	end
+
+	post '/home/groups' do
+		group = Group.new
+		group.name = params['name']
+		group.user_id = @user.id
+		group.add
+		redirect "/home/groups"
+	end
+
+	get '/home/group/:group_id' do
+		slim :group, locals: {group: Group.get(params['group_id'])}
+	end
+
+	post '/home/group/:group_id' do
+		student = Student.new
+		student.name = params['name']
+		student.image = params['name']
+		student.group_id = params['group_id']
+		student.add
+		redirect "/home/group/#{params['group_id']}"
+	end
+
+	get '/api/startquiz/:group_id' do
+		student_ids = []
+		students = Group.get(params['group_id']).students
+		students.each do |student|
+			student_ids << student.id
+		end
+		quiz = {'correct' => 0, 'amount' => students.length, 'student_ids' => student_ids}
+		return quiz.to_json
+	end
+
+	get '/api/madeguess/:id/:answer' do
+		session['quiz']['student_ids'].delete(params['id'])
+		session['quiz']['correct'] += 1
+		return session['quiz']
+	end
+
+	get '/api/getstudentimage/:id' do
+		Student.image(params['id']).to_json
+	end
+
+	get '/api/getstudentname/:id' do
+		Student.name(params['id']).to_json
+	end
+
+	get '/api/getgroupname/:id' do
+		Group.name(params['id']).to_json
+	end
+
+	get '/api/deletegroup/:group_id' do
+		Group.delete(params['group_id'])
+	end
+
+	get '/api/removestudent/:student_id' do
+		Student.delete(params['student_id'])
 	end
 
 end

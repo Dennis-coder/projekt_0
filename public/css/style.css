@@ -1,0 +1,222 @@
+/* General css */
+body {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("/media/ntibakgrund.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000000;
+    color: white;
+    font-family: 'Muli', sans-serif;
+    margin: 0;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h1{
+    margin-bottom: 0%;
+}
+
+h3{
+    margin: 0;
+}
+
+p {
+    width: fit-content;
+    margin: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
+
+.button {
+    color:rgba(255, 255, 255, 1);
+    padding: 5px;
+    font-size: 1.3rem;
+    text-decoration: none;
+}
+
+.button:hover{
+    text-decoration: underline;
+}
+
+.button:active{
+    color: rgba(180, 180, 180, 1);
+}
+
+.menu-button{
+    color: white;
+    text-decoration: none;
+}
+
+.menu-button:hover{
+    text-decoration: underline;
+}
+
+.menu-button:active{
+    text-shadow: 1px 1px rgba(255,255,255, 0.6);
+}
+
+.space{
+    margin: 0.4rem 0;
+    position: flex;
+}
+
+.centered-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.centered-column{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.centered-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.toggle {
+    display: none;
+}
+
+.menu{
+    display: flex;
+    padding: 1rem;
+    position: absolute;
+    left: 0%;
+}
+
+
+.menu:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+nav{
+    margin-top: 8rem;
+    height: auto;
+    width: 18rem;
+    position: absolute;
+    left: 0%;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-self: flex-start;
+    z-index: 100;
+    transform: translate3d(-21rem, 0, 0);
+    transition: all 0.5s;
+    padding: 1rem;
+}
+
+nav.show{
+    transform: translate3d(0, 0, 0);
+    transition: all 0.5s;
+}
+
+#toggle-menu img{
+    color: white;
+    width: 40px;
+    height: 40px;
+}
+
+#register h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+#practice {
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+#help {
+    background-color: rgba(255, 255, 255, 1);
+    width: fit-content; 
+    height: fit-content;
+    padding-right: 1.5rem;
+    border: 1px solid black;
+    font-size: 1.3rem;
+}
+
+#student img {
+    width: 20rem;
+}
+
+#practice input {
+    display: flex;
+    flex-direction: column;
+    width: 10rem;
+    font-size: 1.2rem;
+}
+
+#practice button{
+    font-size: 1.2rem;
+}
+
+#group-selector {
+    font-size: 1.3rem;
+    margin-right: 1rem;
+}
+
+#index h1{
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#index h2{
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#group img{
+    width: 5rem;
+}
+
+@media (min-width: 1500px) {
+
+    .centered-column {
+        font-size: 2rem;
+    }
+    input {
+        font-size: 1.5rem;
+    }
+    #index h1{
+        font-size: 3rem
+    }
+    #index h2{
+        font-size: 2.8rem;
+    }
+    .button{
+        font-size: 2rem;
+    }
+
+}

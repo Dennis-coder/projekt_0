@@ -17,11 +17,11 @@ class Validator
     end
 
     def self.register(params)
-        username = params['username']
+        email = params['email']
         plaintext = params['plaintext']
         plaintext_confirm = params['plaintext_confirm']
         allowed_chars = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0"]
-        username.downcase.each_char do |char|
+        email.downcase.each_char do |char|
             if allowed_chars.index(char) == nil
                 return "No special characters, only a-z and 0-9 are allowed"
             end
@@ -32,11 +32,9 @@ class Validator
             end
         end
         begin
-            user_id = User.id(username)
+            user_id = User.id(email)
         rescue
-            if username.length < 1 || username.length > 16
-                return "Username has to be between 1-16 characters"
-            elsif plaintext.length < 5
+            if plaintext.length < 5
                 return "Password has to be 5 characters or more"
             elsif plaintext != plaintext_confirm
                 return "Passwords are not the same"

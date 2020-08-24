@@ -1,0 +1,15 @@
+div#group class='centered-column'
+    div class='centered-wrap' style='width:50vw;'
+        -group.students.each do |student|
+            div class='space centered-row' style='margin:1rem;'
+                img src='#{student.image}'
+                div class='centered-column'
+                    h3 #{student.name}
+                    button onclick='editProfile(#{student.id})' Edit profile
+                    button onclick='removeStudentConfirm(#{student.id})' Remove
+    button onclick='toggleAddStudent()' Add student
+    div#add-student class='toggle'
+        form action='/home/group/#{group.id}' method='post' class='centered-column'
+            input type='text' name='name'
+            input type='file' name='image'
+            button type='submit' Add

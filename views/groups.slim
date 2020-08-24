@@ -1,0 +1,16 @@
+div#groups class='centered-column'
+    div class='centered-wrap' style='width:50vw;'
+        -groups.each do |group|
+            div class='space centered-row' style='margin:1rem;'
+                a class='button' href='/home/group/#{group.id}'
+                    h3 #{group.name}
+                    p #{group.students.length} people
+                div class='centered-column'
+                    button onclick="location.href='/home/group/#{group.id}'" Edit
+                    button onclick='deleteGroupConfirm(#{group.id})' Delete
+    button onclick='toggleAddGroup()' Add group
+    div#add-group class='toggle'
+        form action='/home/groups' method='post' class='centered-column'
+            input type='text' name='name'
+            button type='submit' Add
+    

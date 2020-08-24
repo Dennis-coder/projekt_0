@@ -14,8 +14,13 @@ class User
         SQLQuery.new.add('users', ['email', 'password_hash', 'name'], [@email, @password_hash, @name]).send
     end
 
-    def students()
-        SQLQuery.new.get('students', ['*']).where.if('user_id', self.id).send
+    def groups()
+        ids = SQLQuery.new.get('groups', ['id']).where.if('user_id', self.id).send
+        groups = []
+        ids.each do |id| 
+            groups << Group.get(id['id'])
+        end
+        return groups
     end
 
     def self.get(id)

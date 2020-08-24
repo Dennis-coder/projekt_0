@@ -1,0 +1,21 @@
+div#practice class='centered-column'
+    -if groups.length > 0
+        div class='centered-row space'
+            select#group-selector
+                -groups.each do |group|
+                    option value=group.id #{group.name}
+            button onclick='quiz()' Starta quiz
+        div#student class='centered-column toggle'
+            div
+                img src="" alt=""
+                div class='centered-row space'
+                    input#guess type="text" placeholder='Make a guess...'
+                    button type='sumbit' onclick='makeGuess()' Send
+            div class='centered-column space'
+                button onclick='toggleHelp()' Nameslist
+                div#help class='toggle'
+                    ul
+                        / -students.each do |student|
+                        /     li class='student#{student['id']}name' #{student['name']}
+    -else 
+        p Go make a group with the people whos names you need to remember
