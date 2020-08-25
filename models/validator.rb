@@ -42,22 +42,9 @@ class Validator
                 return true
             end
         end
-        return "A user with that name already exists"
+        return "A user with that email already exists"
     end
 
-    def self.message(text)
-        if text == nil
-            return false
-        else
-            text.each_char do |char|
-                if char != " "
-                    return true
-                end
-            end
-
-            return false
-        end
-    end
     def self.change_password(password_hash, params)
         if BCrypt::Password.new(password_hash) == params['current_password']
             if params['new_password'] != params['confirm_password']
@@ -70,19 +57,6 @@ class Validator
         else
             return 'Wrong password'
         end
-    end
-
-    def self.report(user, params)
-        if Validator.message(params['username']) == false || Validator.message(params['reason']) == false
-            return "Please fill out every box"
-        else
-            if User.id(params['username']) == nil 
-                return "That username does not exist"
-            elsif params['username'] == user.username
-                return "You cannot report yourself"
-            end
-        end
-        return true
     end
 
 end

@@ -27,7 +27,7 @@ class Seeder
                 "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "email" TEXT NOT NULL UNIQUE,
                 "password_hash" TEXT NOT NULL,
-                "name" INTEGER NOT NULL
+                "name" TEXT NOT NULL
             );
         SQL
         db.execute <<-SQL
@@ -64,7 +64,7 @@ class Seeder
         groups.each do |group|
             db.execute("INSERT INTO groups (name, user_id) VALUES(?,?)", group[:name], group[:user_id])
         end
-
+        
         students = [
             {name: "Adrian", image: '/media/Adrian_Almetun_Smeds.jpg', group_id: 1},
             {name: "Alexander", image: '/media/Alexander_Kjellberg.jpeg', group_id: 1},
@@ -77,8 +77,7 @@ class Seeder
             {name: "Filip", image: '/media/Filip_Liljenberg.jpeg', group_id: 1},
             {name: "Henrik", image: '/media/Henrik_Stahl.jpeg', group_id: 1},
             {name: "Rasmus", image: '/media/Rasmus_Brednert.jpg', group_id: 1},
-            {name: "Sebastian", image: '/media/Sebastian_Utbult.jpg', group_id: 1},
-            {name: "Hej", image: '/media/pfp.jpg', group_id: 2}
+            {name: "Sebastian", image: '/media/Sebastian_Utbult.jpg', group_id: 1}
         ]
 
         students.each do |student|

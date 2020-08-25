@@ -31,7 +31,16 @@ class Student
         SQLQuery.new.get('students', ['name']).where.if('id', id).send.first['name']
     end
 
+    def self.temp_id()
+        SQLQuery.new.get('students', ['id']).where.if('image', 'temp').send.first['id']
+    end
+
+    def self.temp_image(image)
+        SQLQuery.new.update('students', ['image'], [image]).where.if('image', 'temp').send
+    end
+
     def self.delete(id)
+        FileUtils.rm("public" + Student.image(id))
         SQLQuery.new.del('students').where.if('id', id).send
     end
 

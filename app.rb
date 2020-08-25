@@ -107,27 +107,31 @@ class Application < Sinatra::Base
 
 	post '/home/group/:group_id' do
 		student = Student.new
-		student.name = params['name']
-		student.image = params['name']
+		student.name = params['student_name']
+		student.image = "temp"
 		student.group_id = params['group_id']
 		student.add
+
+		tmpdir = params['image']['tempfile']
+		redirect_folder = "public/media"
+		file_type = params['image']['type'][6..]
+		
+		id = Student.temp_id()
+		Student.temp_image("/media/#{id}.#{file_type}")
+
+		FileUtils.cp(tmpdir, "#{redirect_folder}/#{id}.#{file_type}")
+
 		redirect "/home/group/#{params['group_id']}"
 	end
 
 	get '/api/startquiz/:group_id' do
-		student_ids = []
 		students = Group.get(params['group_id']).students
+		student_ids = []
 		students.each do |student|
 			student_ids << student.id
 		end
 		quiz = {'correct' => 0, 'amount' => students.length, 'student_ids' => student_ids}
 		return quiz.to_json
-	end
-
-	get '/api/madeguess/:id/:answer' do
-		session['quiz']['student_ids'].delete(params['id'])
-		session['quiz']['correct'] += 1
-		return session['quiz']
 	end
 
 	get '/api/getstudentimage/:id' do

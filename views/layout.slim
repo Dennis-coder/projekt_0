@@ -28,7 +28,7 @@ html lang="en"
             == yield
 
         footer
-            div
+            div class='centered-column'
                 -if session['user_id'] != nil
                     a class='button' href='/logout' Logout
                 p Remember That Face Inc.
